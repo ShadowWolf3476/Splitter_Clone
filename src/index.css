@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: "Bricolage Grotesque", "Segoe UI", sans-serif;
+  line-height: 1.55;
+  background: #f1efe9;
+  color: #1e1a17;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
