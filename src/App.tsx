@@ -147,32 +147,32 @@ function App() {
       <div className="grain" aria-hidden="true" />
 
       <section className="left">
-        <p className="kicker">Trip Fuel Split Calculator</p>
-        <h1>
+        <p className="kicker reveal d1">Trip Fuel Split Calculator</p>
+        <h1 className="reveal d2">
           TRIP FUEL
           <br />
           SPLIT CALCULATOR
         </h1>
-        <p className="tag">Split fuel fairly</p>
-        <div className="divider" />
+        <p className="tag reveal d3">Split fuel fairly</p>
+        <div className="divider reveal d4" />
 
         <div className="how">
-          <p className="how-title">How it works</p>
-          <div className="step">
+          <p className="how-title reveal d5">How it works</p>
+          <div className="step reveal d6">
             <span>01</span>
             <div>
               <p>Enter trip details</p>
               <small>Distance, mileage, price &amp; people</small>
             </div>
           </div>
-          <div className="step">
+          <div className="step reveal d7">
             <span>02</span>
             <div>
               <p>Set rules</p>
               <small>Include vehicle owner or split equally</small>
             </div>
           </div>
-          <div className="step">
+          <div className="step reveal d8">
             <span>03</span>
             <div>
               <p>Share cost</p>
@@ -183,14 +183,11 @@ function App() {
       </section>
 
       <section className="right" aria-label="Trip split calculator">
-        <div className="card">
+        <div className="card reveal d3">
           <div className="card-head">
             <div>
               <p className="section-label">Trip Details</p>
               <p className="section-sub">Fill in the trip basics</p>
-            </div>
-            <div className="calc-icon" aria-hidden="true">
-              =
             </div>
           </div>
 

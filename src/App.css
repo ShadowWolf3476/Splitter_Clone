@@ -10,6 +10,7 @@
   --accent-ink: #1f2b39;
   --shadow: rgba(60, 59, 57, 0.2);
   --shadow-strong: rgba(60, 59, 57, 0.35);
+  --ease-smooth: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .page {
@@ -47,6 +48,46 @@
   display: grid;
   gap: 1.2rem;
   align-content: start;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: rise 720ms var(--ease-smooth) forwards;
+  animation-delay: var(--delay, 0ms);
+  will-change: transform, opacity;
+}
+
+.d1 {
+  --delay: 80ms;
+}
+
+.d2 {
+  --delay: 160ms;
+}
+
+.d3 {
+  --delay: 240ms;
+}
+
+.d4 {
+  --delay: 320ms;
+}
+
+.d5 {
+  --delay: 420ms;
+}
+
+.d6 {
+  --delay: 520ms;
+}
+
+.d7 {
+  --delay: 620ms;
+}
+
+.d8 {
+  --delay: 720ms;
 }
 
 .kicker {
@@ -165,17 +206,6 @@ h1 {
   font-weight: 600;
 }
 
-.calc-icon {
-  width: 34px;
-  height: 34px;
-  border: 2px solid #e1dbd5;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
-}
-
 .input-grid {
   display: grid;
   gap: 1rem;
@@ -249,7 +279,8 @@ summary:focus-visible {
   gap: 0.3rem;
   text-align: center;
   cursor: pointer;
-  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  transition: transform 180ms var(--ease-smooth), box-shadow 180ms var(--ease-smooth),
+    background 180ms var(--ease-smooth);
   font-family: 'IBM Plex Mono', 'Courier New', monospace;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -271,6 +302,11 @@ summary:focus-visible {
 
 .fuel.active small {
   color: var(--accent-ink);
+}
+
+.fuel:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 6px 0 var(--shadow);
 }
 
 .custom {
@@ -324,13 +360,14 @@ button {
   letter-spacing: 0.18em;
   font-family: 'IBM Plex Mono', 'Courier New', monospace;
   font-weight: 700;
-  transition: transform 140ms ease, box-shadow 140ms ease;
+  transition: transform 180ms var(--ease-smooth), box-shadow 180ms var(--ease-smooth),
+    filter 180ms var(--ease-smooth);
   background: #fff;
 }
 
 button:hover {
-  transform: translateY(-1px);
-  box-shadow: 4px 4px 0 var(--shadow);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 var(--shadow);
 }
 
 .primary {
@@ -344,6 +381,18 @@ button:hover {
   border: 0;
   color: #5a5753;
   padding: 0.4rem 0;
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 220ms var(--ease-smooth), transform 180ms var(--ease-smooth);
+}
+
+.ghost:hover {
+  background-size: 100% 2px;
+  transform: translateY(-1px);
 }
 
 .errors {
@@ -448,6 +497,16 @@ button:hover {
   letter-spacing: 0.12em;
   font-size: 0.72rem;
   color: #6e6b67;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size 220ms var(--ease-smooth), transform 180ms var(--ease-smooth);
+}
+
+.summary summary:hover {
+  background-size: 100% 2px;
+  transform: translateY(-1px);
 }
 
 .summary textarea {
@@ -510,5 +569,31 @@ button:hover {
 
   .pay {
     text-align: left;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .fuel,
+  button,
+  .ghost,
+  .summary summary {
+    transition: none;
   }
 }
