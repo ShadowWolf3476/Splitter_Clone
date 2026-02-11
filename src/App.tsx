@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import './App.css'
 
 type FuelType = 'petrol' | 'diesel' | 'custom'
@@ -27,14 +27,24 @@ const roundToIncrement = (value: number, increment: number) => {
   return Math.round(value / increment) * increment
 }
 
+const DEFAULTS = {
+  distance: '120',
+  mileage: '40',
+  fuelType: 'petrol' as FuelType,
+  fuelPrice: String(FUEL_PRESETS.petrol),
+  people: '3',
+  includeOwner: true,
+  rounding: '1',
+}
+
 function App() {
-  const [distance, setDistance] = useState('120')
-  const [mileage, setMileage] = useState('40')
-  const [fuelType, setFuelType] = useState<FuelType>('petrol')
-  const [fuelPrice, setFuelPrice] = useState(String(FUEL_PRESETS.petrol))
-  const [people, setPeople] = useState('3')
-  const [includeOwner, setIncludeOwner] = useState(true)
-  const [rounding, setRounding] = useState('1')
+  const [distance, setDistance] = useState(DEFAULTS.distance)
+  const [mileage, setMileage] = useState(DEFAULTS.mileage)
+  const [fuelType, setFuelType] = useState<FuelType>(DEFAULTS.fuelType)
+  const [fuelPrice, setFuelPrice] = useState(DEFAULTS.fuelPrice)
+  const [people, setPeople] = useState(DEFAULTS.people)
+  const [includeOwner, setIncludeOwner] = useState(DEFAULTS.includeOwner)
+  const [rounding, setRounding] = useState(DEFAULTS.rounding)
   const [errors, setErrors] = useState<string[]>([])
   const [result, setResult] = useState<Result | null>(null)
   const [copyStatus, setCopyStatus] = useState('')
@@ -46,13 +56,13 @@ function App() {
   }
 
   const resetAll = () => {
-    setDistance('120')
-    setMileage('40')
-    setFuelType('petrol')
-    setFuelPrice(String(FUEL_PRESETS.petrol))
-    setPeople('3')
-    setIncludeOwner(true)
-    setRounding('1')
+    setDistance(DEFAULTS.distance)
+    setMileage(DEFAULTS.mileage)
+    setFuelType(DEFAULTS.fuelType)
+    setFuelPrice(DEFAULTS.fuelPrice)
+    setPeople(DEFAULTS.people)
+    setIncludeOwner(DEFAULTS.includeOwner)
+    setRounding(DEFAULTS.rounding)
     setErrors([])
     setResult(null)
     setCopyStatus('')
@@ -66,9 +76,15 @@ function App() {
     const roundingNum = Number(rounding)
 
     const nextErrors: string[] = []
-    if (!(distanceNum > 0)) nextErrors.push('Distance must be greater than 0 km.')
-    if (!(mileageNum > 0)) nextErrors.push('Mileage must be greater than 0 km/l.')
-    if (!(fuelPriceNum > 0)) nextErrors.push('Fuel price must be greater than 0 per liter.')
+    if (!Number.isFinite(distanceNum) || distanceNum <= 0) {
+      nextErrors.push('Distance must be greater than 0 km.')
+    }
+    if (!Number.isFinite(mileageNum) || mileageNum <= 0) {
+      nextErrors.push('Mileage must be greater than 0 km/l.')
+    }
+    if (!Number.isFinite(fuelPriceNum) || fuelPriceNum <= 0) {
+      nextErrors.push('Fuel price must be greater than 0 per liter.')
+    }
     if (!Number.isInteger(peopleNum) || peopleNum <= 0) {
       nextErrors.push('Number of people must be a whole number greater than 0.')
     }
@@ -104,14 +120,14 @@ function App() {
     ? [
         'TRIP COST SPLIT',
         '----------------------',
-        `Total Cost: ?${formatNumber(result.totalCost)}`,
-        `Distance: ${distance} km`,
-        `Mileage: ${mileage} km/l`,
-        `Fuel Price: ?${fuelPrice}/l`,
+        `Total Cost: ₹${formatNumber(result.totalCost)}`,
+        `Distance: ${formatNumber(Number(distance))} km`,
+        `Mileage: ${formatNumber(Number(mileage))} km/l`,
+        `Fuel Price: ₹${formatNumber(Number(fuelPrice))}/l`,
         `People in vehicle: ${people}`,
         '',
         'SPLIT:',
-        `Each person pays: ?${formatNumber(result.roundedPerPerson)}`,
+        `Each person pays: ₹${formatNumber(result.roundedPerPerson)}`,
         `(${result.payingPeople} people paying ${includeOwner ? 'including' : 'excluding'} owner)`,
       ].join('\n')
     : ''
@@ -174,7 +190,7 @@ function App() {
               <p className="section-sub">Fill in the trip basics</p>
             </div>
             <div className="calc-icon" aria-hidden="true">
-              ?
+              =
             </div>
           </div>
 
@@ -212,7 +228,7 @@ function App() {
                   onClick={() => handleFuelTypeChange('petrol')}
                 >
                   <span>Petrol</span>
-                  <small>?{FUEL_PRESETS.petrol.toFixed(2)}</small>
+                  <small>₹{FUEL_PRESETS.petrol.toFixed(2)}</small>
                 </button>
                 <button
                   type="button"
@@ -220,7 +236,7 @@ function App() {
                   onClick={() => handleFuelTypeChange('diesel')}
                 >
                   <span>Diesel</span>
-                  <small>?{FUEL_PRESETS.diesel.toFixed(2)}</small>
+                  <small>₹{FUEL_PRESETS.diesel.toFixed(2)}</small>
                 </button>
                 <button
                   type="button"
@@ -247,7 +263,7 @@ function App() {
 
           {fuelType === 'custom' && (
             <label className="field custom">
-              <span>Custom price (?/l)</span>
+              <span>Custom price (₹/l)</span>
               <input
                 type="number"
                 min="0"
@@ -258,9 +274,7 @@ function App() {
             </label>
           )}
 
-          <p className="location">
-            Using Ernakulam, Kerala � Updated Feb 10, 2026, 9:07 AM
-          </p>
+          <p className="location">Using Ernakulam, Kerala · Updated Feb 10, 2026, 9:07 AM</p>
 
           <div className="config">
             <p className="section-label">Configuration</p>
@@ -273,12 +287,16 @@ function App() {
                 />
                 Include owner
               </label>
-              <select value={rounding} onChange={(event) => setRounding(event.target.value)}>
+              <select
+                value={rounding}
+                onChange={(event) => setRounding(event.target.value)}
+                aria-label="Rounding preference"
+              >
                 <option value="0">No rounding</option>
-                <option value="0.5">Round to ?0.5</option>
-                <option value="1">Round to ?1</option>
-                <option value="5">Round to ?5</option>
-                <option value="10">Round to ?10</option>
+                <option value="0.5">Round to ₹0.5</option>
+                <option value="1">Round to ₹1</option>
+                <option value="5">Round to ₹5</option>
+                <option value="10">Round to ₹10</option>
               </select>
             </div>
           </div>
@@ -293,7 +311,7 @@ function App() {
           </div>
 
           {errors.length > 0 && (
-            <div className="errors" role="alert">
+            <div className="errors" role="alert" aria-live="polite">
               {errors.map((error: string) => (
                 <p key={error}>{error}</p>
               ))}
@@ -305,20 +323,20 @@ function App() {
               <div className="result-top">
                 <div>
                   <p className="label">Total fuel cost</p>
-                  <p className="total">?{formatNumber(result.totalCost)}</p>
+                  <p className="total">₹{formatNumber(result.totalCost)}</p>
                 </div>
                 <div className="pay">
                   <p className="label">Each person pays</p>
-                  <p className="per">?{formatNumber(result.roundedPerPerson)}</p>
+                  <p className="per">₹{formatNumber(result.roundedPerPerson)}</p>
                 </div>
               </div>
               <div className="breakdown">
                 <div>
-                  <p>Distance: {distance} km</p>
-                  <p>Fuel: ?{fuelPrice}/l</p>
+                  <p>Distance: {formatNumber(Number(distance))} km</p>
+                  <p>Fuel: ₹{formatNumber(Number(fuelPrice))}/l</p>
                 </div>
                 <div>
-                  <p>Mileage: {mileage} km/l</p>
+                  <p>Mileage: {formatNumber(Number(mileage))} km/l</p>
                   <p>People: {people}</p>
                 </div>
                 <p className="foot">
@@ -328,8 +346,15 @@ function App() {
               <button type="button" className="ghost" onClick={copySummary}>
                 Copy Summary
               </button>
-              {copyStatus && <p className="copy-status">{copyStatus}</p>}
-              <pre>{summaryText}</pre>
+              {copyStatus && (
+                <p className="copy-status" role="status">
+                  {copyStatus}
+                </p>
+              )}
+              <details className="summary">
+                <summary>Show summary text</summary>
+                <textarea readOnly value={summaryText} aria-label="Trip cost split summary" rows={8} />
+              </details>
             </div>
           )}
         </div>

@@ -1,14 +1,19 @@
-body {
-  margin: 0;
-  min-width: 320px;
-  font-family: "Bricolage Grotesque", "Segoe UI", sans-serif;
-  line-height: 1.55;
-  background: #f1efe9;
-  color: #1e1a17;
+﻿@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  line-height: 1.55;
+  background: #f1efe9;
+  color: #1e1a17;
 }
 
 #root {

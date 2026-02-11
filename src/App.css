@@ -1,10 +1,36 @@
+﻿:root {
+  color-scheme: light;
+  --bg: #f4efea;
+  --paper: #fdfbf8;
+  --ink: #2d2a27;
+  --ink-soft: #5f5b56;
+  --muted: #9a9895;
+  --border: #3c3b39;
+  --accent: #6db6f5;
+  --accent-ink: #1f2b39;
+  --shadow: rgba(60, 59, 57, 0.2);
+  --shadow-strong: rgba(60, 59, 57, 0.35);
+}
+
 .page {
   min-height: 100vh;
   display: grid;
-  gap: 2rem;
-  padding: 2.5rem clamp(1.6rem, 3vw, 3.5rem);
-  background: #f4efea;
-  color: #383838;
+  gap: clamp(1.5rem, 3vw, 2.8rem);
+  padding: clamp(1.8rem, 4vw, 3.5rem);
+  background: var(--bg);
+  color: var(--ink);
+  position: relative;
+  isolation: isolate;
+}
+
+.page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 12% 10%, #ffffff 0%, transparent 55%),
+    radial-gradient(circle at 80% 20%, #ffffffa6 0%, transparent 45%);
+  opacity: 0.65;
+  z-index: -2;
 }
 
 .grain {
@@ -26,7 +52,7 @@
 .kicker {
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.38em;
   font-size: 0.72rem;
   color: #6e6b67;
   font-weight: 600;
@@ -34,23 +60,23 @@
 
 h1 {
   margin: 0;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   font-size: clamp(2.2rem, 6vw, 3.4rem);
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: 0.02em;
 }
 
 .tag {
   margin: 0;
-  color: #6da8d6;
+  color: var(--accent);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.25em;
-  font-size: 0.8rem;
+  letter-spacing: 0.26em;
+  font-size: 0.82rem;
 }
 
 .divider {
-  width: 70px;
+  width: 72px;
   height: 2px;
   background: #d7d0ca;
 }
@@ -66,7 +92,7 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 0.72rem;
-  color: #9a9895;
+  color: var(--muted);
   font-weight: 600;
 }
 
@@ -82,11 +108,11 @@ h1 {
   height: 42px;
   border-radius: 8px;
   border: 2px solid #e1dbd5;
-  color: #69a6d8;
+  color: var(--accent);
   font-weight: 700;
   display: grid;
   place-items: center;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 .step p {
@@ -108,13 +134,13 @@ h1 {
 }
 
 .card {
-  border: 2px solid #3c3b39;
-  background: #fdfbf8;
-  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: var(--paper);
+  border-radius: 14px;
   padding: 2rem;
-  box-shadow: 6px 6px 0 #3c3b3922;
+  box-shadow: 7px 7px 0 var(--shadow);
   display: grid;
-  gap: 1.5rem;
+  gap: 1.6rem;
 }
 
 .card-head {
@@ -126,11 +152,11 @@ h1 {
 
 .section-label {
   margin: 0;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #9a9895;
+  color: var(--muted);
 }
 
 .section-sub {
@@ -146,7 +172,8 @@ h1 {
   border-radius: 8px;
   display: grid;
   place-items: center;
-  color: #9a9895;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 .input-grid {
@@ -158,11 +185,11 @@ h1 {
   display: grid;
   gap: 0.4rem;
   font-weight: 600;
-  color: #3c3b39;
+  color: var(--ink);
 }
 
 .field span {
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.78rem;
@@ -178,7 +205,7 @@ textarea {
 input,
 select {
   width: 100%;
-  border: 2px solid #3c3b39;
+  border: 2px solid var(--border);
   border-radius: 8px;
   padding: 0.7rem 0.8rem;
   background: #fff;
@@ -186,7 +213,9 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+button:focus-visible,
+summary:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px #6da8d633;
 }
@@ -198,11 +227,11 @@ select:focus {
 
 .subhead {
   margin: 0 0 0.7rem;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 0.8rem;
-  color: #3c3b39;
+  color: var(--ink);
 }
 
 .fuel-buttons {
@@ -212,7 +241,7 @@ select:focus {
 }
 
 .fuel {
-  border: 2px solid #3c3b39;
+  border: 2px solid var(--border);
   border-radius: 6px;
   padding: 0.5rem;
   background: #fff;
@@ -220,8 +249,8 @@ select:focus {
   gap: 0.3rem;
   text-align: center;
   cursor: pointer;
-  transition: transform 140ms ease, box-shadow 140ms ease;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
@@ -229,19 +258,19 @@ select:focus {
 
 .fuel small {
   text-transform: none;
-  font-family: "Inter", "Segoe UI", sans-serif;
   letter-spacing: 0.02em;
   color: #4e4b47;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 .fuel.active {
-  background: #6db6f5;
-  color: #1f2b39;
-  box-shadow: 4px 4px 0 #3c3b39;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 4px 4px 0 var(--border);
 }
 
 .fuel.active small {
-  color: #1f2b39;
+  color: var(--accent-ink);
 }
 
 .custom {
@@ -270,7 +299,7 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.8rem;
@@ -287,30 +316,34 @@ select:focus {
 }
 
 button {
-  border: 2px solid #3c3b39;
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 0.95rem 1rem;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   font-weight: 700;
   transition: transform 140ms ease, box-shadow 140ms ease;
+  background: #fff;
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 4px 4px 0 #3c3b3922;
+  box-shadow: 4px 4px 0 var(--shadow);
 }
 
 .primary {
-  background: #6db6f5;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 4px 4px 0 var(--shadow-strong);
 }
 
 .ghost {
   background: transparent;
   border: 0;
   color: #5a5753;
+  padding: 0.4rem 0;
 }
 
 .errors {
@@ -344,9 +377,9 @@ button:hover {
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   font-size: 0.7rem;
-  color: #9a9895;
+  color: var(--muted);
 }
 
 .total {
@@ -363,13 +396,13 @@ button:hover {
   margin: 0.3rem 0 0;
   font-size: 2rem;
   font-weight: 800;
-  color: #6db6f5;
-  text-shadow: 2px 2px 0 #3c3b39;
+  color: var(--accent);
+  text-shadow: 2px 2px 0 var(--border);
 }
 
 .breakdown {
-  border: 1px solid #3c3b39;
-  border-radius: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 0.9rem;
   display: grid;
   gap: 0.4rem;
@@ -380,7 +413,7 @@ button:hover {
   display: flex;
   justify-content: space-between;
   gap: 0.6rem;
-  font-family: "IBM Plex Mono", "Courier New", monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   font-size: 0.85rem;
 }
 
@@ -401,13 +434,32 @@ button:hover {
   font-weight: 600;
 }
 
-pre {
-  margin: 0;
-  padding: 0.7rem;
-  border-radius: 8px;
+.summary {
   border: 1px dashed #d4cdc7;
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
   background: #f7f4ef;
-  font-size: 0.85rem;
+}
+
+.summary summary {
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: #6e6b67;
+}
+
+.summary textarea {
+  margin-top: 0.7rem;
+  width: 100%;
+  border: 1px solid #d4cdc7;
+  border-radius: 8px;
+  padding: 0.7rem;
+  background: #fff;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.82rem;
+  resize: vertical;
 }
 
 @media (min-width: 980px) {
